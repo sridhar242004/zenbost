@@ -69,8 +69,7 @@
 
         /* === HERO === */
         #hero { position: relative; width: 100%; height: 100vh; overflow: hidden; background: #0F0E0D; }
-        #hero-canvas { position: absolute; inset: 0; z-index: 1; display: block; width: 100%; height: 100%; }
-        .hero-vignette { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(ellipse at 25% 50%, transparent 25%, #0F0E0D 80%); }
+        .hero-vignette { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(ellipse at 30% 50%, transparent 35%, #0F0E0D 85%); }
         .hero-content { position: relative; z-index: 10; pointer-events: none; }
         .hero-content a, .hero-content button { pointer-events: auto; }
         .hero-eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1.5rem; overflow: hidden; }
@@ -89,6 +88,17 @@
         .hero-flavor-tags { position: absolute; bottom: 12%; left: 8%; z-index: 10; display: flex; gap: 0.75rem; opacity: 0; transform: translateY(20px); }
         .hero-flavor-tag { padding: 0.5rem 1rem; border-radius: 100px; border: 1px solid rgba(255,255,255,0.1); font-family: 'Space Grotesk', sans-serif; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); backdrop-filter: blur(10px); transition: all 0.4s ease; cursor: pointer; pointer-events: auto; }
         .hero-flavor-tag:hover, .hero-flavor-tag.active { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); }
+
+        /* Hero cans showcase */
+        .hero-cans-showcase { position: absolute; right: 6%; top: 50%; transform: translateY(-50%); z-index: 5; display: flex; align-items: flex-end; pointer-events: auto; width: 520px; height: 400px; }
+        .hero-can-item { position: absolute; transition: all 0.8s cubic-bezier(0.16,1,0.3,1); filter: drop-shadow(0 25px 50px rgba(0,0,0,0.35)); cursor: pointer; }
+        .hero-can-item:nth-child(1) { right: 0; z-index: 4; transform: translateY(0) scale(1.05); }
+        .hero-can-item:nth-child(2) { right: 90px; z-index: 3; transform: translateY(25px) scale(0.92); }
+        .hero-can-item:nth-child(3) { right: 175px; z-index: 2; transform: translateY(50px) scale(0.82); }
+        .hero-can-item:nth-child(4) { right: 255px; z-index: 1; transform: translateY(75px) scale(0.74); }
+        .hero-can-item.active { transform: translateY(-30px) scale(1.12) !important; z-index: 10 !important; filter: drop-shadow(0 40px 80px rgba(0,0,0,0.5)); }
+        .hero-can-item .real-can-tab { transition: transform 0.4s ease; transform-origin: center; }
+        .hero-can-item.opened .real-can-tab { transform: translateX(-50%) rotate(-25deg) translateY(-3px); }
 
         /* === REALISTIC CAN COMPONENT === */
         .real-can-wrapper {
@@ -307,15 +317,24 @@
         .noise { position: fixed; inset: 0; z-index: 99998; pointer-events: none; opacity: 0.015; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
         @media (max-width: 768px) {
-            .nav-glass { display: none !important; }
+            .nav-glass { left: 1rem; right: 1rem; transform: translateX(0) translateY(-120%); width: auto; padding: 0.5rem 1rem; }
+            .nav-glass.visible { transform: translateX(0) translateY(0); }
             .hero-title { font-size: clamp(2.5rem, 12vw, 4rem); }
-            .hero-content { padding: 0 1.5rem; }
+            .hero-content { padding: 0 1.5rem; position: relative !important; padding-top: 6rem; padding-bottom: 2rem; height: auto !important; min-height: 100dvh; flex-direction: column; justify-content: center; }
+            .hero-cans-showcase { position: relative; right: auto; top: auto; transform: none; margin: 2rem auto 0; width: 100%; height: 280px; }
+            .hero-can-item { position: absolute; left: 50%; margin-left: -80px; }
+            .hero-can-item:nth-child(1) { transform: translateY(0) scale(0.85); z-index: 4; opacity: 1; }
+            .hero-can-item:nth-child(2) { transform: translateY(0) scale(0.85); z-index: 3; opacity: 0; }
+            .hero-can-item:nth-child(3) { transform: translateY(0) scale(0.85); z-index: 2; opacity: 0; }
+            .hero-can-item:nth-child(4) { transform: translateY(0) scale(0.85); z-index: 1; opacity: 0; }
+            .hero-can-item.active { opacity: 1 !important; transform: translateY(-15px) scale(0.95) !important; z-index: 10 !important; }
             .journey-number { font-size: 6rem; right: 1rem; }
             .testimonial-card { width: 320px; padding: 1.5rem; }
             .compare-row { grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; font-size: 0.7rem; }
             .cursor-glow, .cursor-dot { display: none !important; }
             body { cursor: auto; }
             .hero-flavor-tags { display: none; }
+            .hero-prompt { display: none; }
             .real-can-wrapper--lg { width: 160px; height: 272px; }
             .real-can-wrapper--md { width: 130px; height: 221px; }
         }
@@ -382,10 +401,11 @@
         </div>
     </nav>
 
-    <button id="mobile-toggle" class="fixed-top top-0 end-0 m-4 z-3 w-12 h-12 rounded-circle bg-warm-cream bg-opacity-90 backdrop-blur-xl border border-dawn-text border-opacity-10 d-flex align-items-center justify-content-center d-md-none text-dawn-text text-opacity-50" aria-label="Menu" style="position:fixed;">
+    <button id="mobile-toggle" class="fixed-top top-0 end-0 m-4 w-12 h-12 rounded-circle bg-warm-cream bg-opacity-90 backdrop-blur-xl border border-dawn-text border-opacity-10 d-flex align-items-center justify-content-center d-md-none text-dawn-text text-opacity-50" aria-label="Menu" style="position:fixed; z-index:10000;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </button>
     <div id="mobile-menu" class="position-fixed top-0 start-0 w-100 h-100 bg-warm-cream d-flex flex-column align-items-center justify-content-center gap-4 opacity-0" style="z-index:9998; pointer-events:none; transition: all 0.7s;">
+        <button id="mobile-menu-close" class="position-absolute" style="top:2rem;right:2rem;width:48px;height:48px;border-radius:50%;background:rgba(45,24,16,0.05);border:1px solid rgba(45,24,16,0.08);display:flex;align-items:center;justify-content:center;color:#2D1810;cursor:pointer;z-index:10;" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         <a href="#journey" class="font-serif fs-1 fw-light fst-italic text-dawn-text mobile-link">The Day</a>
         <a href="#collection" class="font-serif fs-1 fw-light fst-italic text-dawn-text mobile-link">Collection</a>
         <a href="#flavor-lab" class="font-serif fs-1 fw-light fst-italic text-dawn-text mobile-link">Lab</a>
@@ -395,15 +415,20 @@
 
     <!-- HERO -->
     <section id="hero">
-        <canvas id="hero-canvas"></canvas>
         <div class="hero-vignette"></div>
-
-        <!-- Fallback CSS cans if WebGL fails -->
-        <div class="hero-fallback-cans" id="hero-fallback-cans">
-            <div class="real-can-wrapper real-can-wrapper--lg real-can--citrus"><div class="real-can"><div class="real-can-rim real-can-rim--top"></div><div class="real-can-top"></div><div class="real-can-body"><div class="real-can-label-wrap"><div class="real-can-label-bg"></div><span class="real-can-brand">ZEST</span><span class="real-can-flavor">Citrus Sunrise</span><span class="real-can-tagline">Liquid Light</span><span class="real-can-badge">Nootropic</span><div class="real-can-dots"><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span></div></div><div class="real-can-liquid"></div></div><div class="real-can-tab"></div><div class="real-can-bottom"></div><div class="real-can-rim real-can-rim--bottom"></div></div></div>
-            <div class="real-can-wrapper real-can-wrapper--lg real-can--berry"><div class="real-can"><div class="real-can-rim real-can-rim--top"></div><div class="real-can-top"></div><div class="real-can-body"><div class="real-can-label-wrap"><div class="real-can-label-bg"></div><span class="real-can-brand">ZEST</span><span class="real-can-flavor">Berry Bliss</span><span class="real-can-tagline">Liquid Light</span><span class="real-can-badge">Antioxidant</span><div class="real-can-dots"><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span></div></div><div class="real-can-liquid"></div></div><div class="real-can-tab"></div><div class="real-can-bottom"></div><div class="real-can-rim real-can-rim--bottom"></div></div></div>
-            <div class="real-can-wrapper real-can-wrapper--lg real-can--tropical"><div class="real-can"><div class="real-can-rim real-can-rim--top"></div><div class="real-can-top"></div><div class="real-can-body"><div class="real-can-label-wrap"><div class="real-can-label-bg"></div><span class="real-can-brand">ZEST</span><span class="real-can-flavor">Tropical Twist</span><span class="real-can-tagline">Liquid Light</span><span class="real-can-badge">Focus</span><div class="real-can-dots"><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span></div></div><div class="real-can-liquid"></div></div><div class="real-can-tab"></div><div class="real-can-bottom"></div><div class="real-can-rim real-can-rim--bottom"></div></div></div>
-            <div class="real-can-wrapper real-can-wrapper--lg real-can--lavender"><div class="real-can"><div class="real-can-rim real-can-rim--top"></div><div class="real-can-top"></div><div class="real-can-body"><div class="real-can-label-wrap"><div class="real-can-label-bg"></div><span class="real-can-brand">ZEST</span><span class="real-can-flavor">Lavender Lemonade</span><span class="real-can-tagline">Liquid Light</span><span class="real-can-badge">Calm</span><div class="real-can-dots"><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span></div></div><div class="real-can-liquid"></div></div><div class="real-can-tab"></div><div class="real-can-bottom"></div><div class="real-can-rim real-can-rim--bottom"></div></div></div>
+        <div class="hero-cans-showcase" id="hero-cans-showcase">
+            <div class="hero-can-item real-can-wrapper real-can-wrapper--lg real-can--citrus active" data-flavor="0">
+                <div class="real-can"><div class="real-can-rim real-can-rim--top"></div><div class="real-can-top"></div><div class="real-can-body"><div class="real-can-label-wrap"><div class="real-can-label-bg"></div><span class="real-can-brand">ZEST</span><span class="real-can-flavor">Citrus Sunrise</span><span class="real-can-tagline">Liquid Light</span><span class="real-can-badge">Nootropic</span><div class="real-can-dots"><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span></div></div><div class="real-can-liquid"></div></div><div class="real-can-tab"></div><div class="real-can-bottom"></div><div class="real-can-rim real-can-rim--bottom"></div></div>
+            </div>
+            <div class="hero-can-item real-can-wrapper real-can-wrapper--lg real-can--berry" data-flavor="1">
+                <div class="real-can"><div class="real-can-rim real-can-rim--top"></div><div class="real-can-top"></div><div class="real-can-body"><div class="real-can-label-wrap"><div class="real-can-label-bg"></div><span class="real-can-brand">ZEST</span><span class="real-can-flavor">Berry Bliss</span><span class="real-can-tagline">Liquid Light</span><span class="real-can-badge">Antioxidant</span><div class="real-can-dots"><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span></div></div><div class="real-can-liquid"></div></div><div class="real-can-tab"></div><div class="real-can-bottom"></div><div class="real-can-rim real-can-rim--bottom"></div></div>
+            </div>
+            <div class="hero-can-item real-can-wrapper real-can-wrapper--lg real-can--tropical" data-flavor="2">
+                <div class="real-can"><div class="real-can-rim real-can-rim--top"></div><div class="real-can-top"></div><div class="real-can-body"><div class="real-can-label-wrap"><div class="real-can-label-bg"></div><span class="real-can-brand">ZEST</span><span class="real-can-flavor">Tropical Twist</span><span class="real-can-tagline">Liquid Light</span><span class="real-can-badge">Focus</span><div class="real-can-dots"><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span></div></div><div class="real-can-liquid"></div></div><div class="real-can-tab"></div><div class="real-can-bottom"></div><div class="real-can-rim real-can-rim--bottom"></div></div>
+            </div>
+            <div class="hero-can-item real-can-wrapper real-can-wrapper--lg real-can--lavender" data-flavor="3">
+                <div class="real-can"><div class="real-can-rim real-can-rim--top"></div><div class="real-can-top"></div><div class="real-can-body"><div class="real-can-label-wrap"><div class="real-can-label-bg"></div><span class="real-can-brand">ZEST</span><span class="real-can-flavor">Lavender Lemonade</span><span class="real-can-tagline">Liquid Light</span><span class="real-can-badge">Calm</span><div class="real-can-dots"><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span><span class="real-can-dot"></span></div></div><div class="real-can-liquid"></div></div><div class="real-can-tab"></div><div class="real-can-bottom"></div><div class="real-can-rim real-can-rim--bottom"></div></div>
+            </div>
         </div>
 
         <div class="hero-content position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center px-4 px-md-5">
@@ -1438,715 +1463,74 @@
             });
         }
 
-        // ===== HERO THREE.JS =====
-        const heroCanvas = document.getElementById('hero-canvas');
-        const fallbackCans = document.getElementById('hero-fallback-cans');
-        let scene, camera, renderer, canGroup, cans = [], burstMesh, burstData = [], fillLevel = 0, opened = false, burstTime = 0, activeCanIdx = 0;
-        let rimLight, keyLight;
+        // ===== HERO CSS CANS =====
+        const heroCans = document.querySelectorAll('.hero-can-item');
+        const heroPrompt = document.getElementById('hero-prompt');
+        let activeCanIdx = 0;
+        let opened = false;
 
-        function initThreeJS() {
-            if (!heroCanvas) return false;
+        // Entrance animation for cans
+        gsap.from('.hero-can-item', {
+            y: 120,
+            opacity: 0,
+            rotationY: 15,
+            duration: 1.4,
+            stagger: 0.15,
+            ease: 'power3.out',
+            delay: 1.2
+        });
 
-            try {
-                scene = new THREE.Scene();
-                camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
-                renderer = new THREE.WebGLRenderer({ canvas: heroCanvas, alpha: true, antialias: true });
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-                renderer.toneMapping = THREE.ACESFilmicToneMapping;
-                renderer.toneMappingExposure = 1.6;
-                renderer.shadowMap.enabled = true;
-                renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        // Floating animation
+        heroCans.forEach((can, i) => {
+            gsap.to(can, {
+                y: '+=12',
+                duration: 2.5 + i * 0.4,
+                ease: 'sine.inOut',
+                yoyo: true,
+                repeat: -1,
+                delay: i * 0.3
+            });
+        });
 
-                // Simple environment without PMREMGenerator.fromScene (which can be buggy)
-                const pmremGenerator = new THREE.PMREMGenerator(renderer);
-                pmremGenerator.compileEquirectangularShader();
-
-                // Create a simple cube render target for env map
-                const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256);
-                const cubeCamera = new THREE.CubeCamera(0.1, 100, cubeRenderTarget);
-
-                // Lighting
-                const ambientLight = new THREE.AmbientLight(0xfff8f0, 0.5);
-                scene.add(ambientLight);
-
-                keyLight = new THREE.SpotLight(0xfff5e6, 12, 40, Math.PI / 5, 0.4, 1);
-                keyLight.position.set(6, 10, 10);
-                keyLight.castShadow = true;
-                keyLight.shadow.mapSize.width = 2048;
-                keyLight.shadow.mapSize.height = 2048;
-                keyLight.shadow.bias = -0.0001;
-                keyLight.shadow.radius = 4;
-                scene.add(keyLight);
-
-                const fillLight = new THREE.SpotLight(0xd4e5ff, 5, 30, Math.PI / 5, 0.4, 1);
-                fillLight.position.set(-8, 5, 8);
-                scene.add(fillLight);
-
-                rimLight = new THREE.SpotLight(0xff9a8b, 8, 25, Math.PI / 8, 0.3, 1);
-                rimLight.position.set(2, 8, -10);
-                scene.add(rimLight);
-
-                const bottomLight = new THREE.PointLight(0xFFD166, 3, 20);
-                bottomLight.position.set(0, -4, 4);
-                scene.add(bottomLight);
-
-                const backLight = new THREE.PointLight(0xffffff, 2, 30);
-                backLight.position.set(0, 5, -15);
-                scene.add(backLight);
-
-                const groundGeo = new THREE.PlaneGeometry(60, 60);
-                const groundMat = new THREE.ShadowMaterial({ opacity: 0.12 });
-                const ground = new THREE.Mesh(groundGeo, groundMat);
-                ground.rotation.x = -Math.PI / 2;
-                ground.position.y = -3;
-                ground.receiveShadow = true;
-                scene.add(ground);
-
-                const canConfigs = [
-                    { name: 'Citrus', color: '#FF9A8B', accent: '#FFD166', pos: [1.5, 0, 0], scale: 1.15, rotSpeed: 0.3, badge: 'NOOTROPIC', flavor: 'Citrus Sunrise' },
-                    { name: 'Berry', color: '#FFD166', accent: '#FF9A8B', pos: [4.5, 0.8, -1.5], scale: 0.95, rotSpeed: 0.25, badge: 'ANTIOXIDANT', flavor: 'Berry Bliss' },
-                    { name: 'Tropical', color: '#4ECDC4', accent: '#FFD166', pos: [4.5, -1.2, -0.5], scale: 0.9, rotSpeed: 0.35, badge: 'FOCUS', flavor: 'Tropical Twist' },
-                    { name: 'Lavender', color: '#9B87F5', accent: '#D4A5D4', pos: [6.5, 0.2, -2.5], scale: 0.85, rotSpeed: 0.2, badge: 'CALM', flavor: 'Lavender Lemonade' },
-                ];
-
-                canGroup = new THREE.Group();
-                scene.add(canGroup);
-                const dummy = new THREE.Object3D();
-
-                // Aluminum material
-                const aluminumMat = new THREE.MeshPhysicalMaterial({
-                    color: 0xe0dcd8,
-                    metalness: 0.95,
-                    roughness: 0.15,
-                    clearcoat: 1.0,
-                    clearcoatRoughness: 0.05,
-                    envMapIntensity: 1.0,
-                    reflectivity: 1.0,
-                });
-
-                // Create brushed texture
-                function createBrushedTexture() {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = 512; canvas.height = 512;
-                    const ctx = canvas.getContext('2d');
-                    ctx.fillStyle = '#808080';
-                    ctx.fillRect(0, 0, 512, 512);
-                    for (let i = 0; i < 2000; i++) {
-                        const y = Math.random() * 512;
-                        const brightness = Math.random() > 0.5 ? 140 : 116;
-                        ctx.strokeStyle = `rgb(${brightness},${brightness},${brightness})`;
-                        ctx.lineWidth = 1 + Math.random() * 2;
-                        ctx.beginPath();
-                        ctx.moveTo(0, y);
-                        ctx.lineTo(512, y + (Math.random() - 0.5) * 2);
-                        ctx.stroke();
-                    }
-                    const tex = new THREE.CanvasTexture(canvas);
-                    tex.wrapS = THREE.RepeatWrapping;
-                    tex.wrapT = THREE.RepeatWrapping;
-                    tex.repeat.set(2, 1);
-                    return tex;
-                }
-                const brushedTexture = createBrushedTexture();
-                aluminumMat.bumpMap = brushedTexture;
-                aluminumMat.bumpScale = 0.003;
-
-                // Create label texture - NO roundRect (not supported everywhere)
-                function createLabelTexture(config) {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = 2048; canvas.height = 1024;
-                    const ctx = canvas.getContext('2d');
-                    const w = 2048, h = 1024;
-
-                    // Paper base
-                    ctx.fillStyle = '#faf8f5';
-                    ctx.fillRect(0, 0, w, h);
-
-                    // Grain
-                    for (let i = 0; i < 25000; i++) {
-                        const x = Math.random() * w;
-                        const y = Math.random() * h;
-                        ctx.fillStyle = `rgba(0,0,0,${0.01 + Math.random() * 0.02})`;
-                        ctx.fillRect(x, y, 1, 1);
-                    }
-
-                    // Top stripe
-                    const topGrad = ctx.createLinearGradient(0, 0, w, 0);
-                    topGrad.addColorStop(0, config.color + '00');
-                    topGrad.addColorStop(0.1, config.color);
-                    topGrad.addColorStop(0.9, config.color);
-                    topGrad.addColorStop(1, config.color + '00');
-                    ctx.fillStyle = topGrad;
-                    ctx.fillRect(0, 0, w, 25);
-
-                    // Bottom stripe
-                    const botGrad = ctx.createLinearGradient(0, h-25, w, h-25);
-                    botGrad.addColorStop(0, config.accent + '00');
-                    botGrad.addColorStop(0.1, config.accent);
-                    botGrad.addColorStop(0.9, config.accent);
-                    botGrad.addColorStop(1, config.accent + '00');
-                    ctx.fillStyle = botGrad;
-                    ctx.fillRect(0, h-25, w, 25);
-
-                    // Side text
-                    ctx.save();
-                    ctx.translate(50, h/2);
-                    ctx.rotate(-Math.PI / 2);
-                    ctx.fillStyle = 'rgba(45,24,16,0.12)';
-                    ctx.font = 'bold 16px Arial, sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.fillText('NOOTROPIC BEVERAGE · COLD PRESSED · 12 FL OZ', 0, 0);
-                    ctx.restore();
-
-                    ctx.save();
-                    ctx.translate(w-50, h/2);
-                    ctx.rotate(Math.PI / 2);
-                    ctx.fillStyle = 'rgba(45,24,16,0.12)';
-                    ctx.font = 'bold 16px Arial, sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.fillText('RECYCLE · MADE IN USA · ZESTBOOST.COM', 0, 0);
-                    ctx.restore();
-
-                    const centerX = w / 2, centerY = h / 2;
-
-                    // Decorative circles
-                    ctx.fillStyle = config.color + '06';
-                    for (let i = 0; i < 8; i++) {
-                        ctx.beginPath();
-                        ctx.arc(centerX + Math.cos(i * 0.9) * 250, centerY + Math.sin(i * 0.9) * 150, 200 + i * 40, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-
-                    // ZEST brand
-                    ctx.save();
-                    ctx.shadowColor = 'rgba(0,0,0,0.06)';
-                    ctx.shadowBlur = 20;
-                    ctx.shadowOffsetY = 8;
-                    ctx.fillStyle = '#2D1810';
-                    ctx.font = 'bold 210px Arial, sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText('ZEST', centerX, centerY - 60);
-                    ctx.restore();
-
-                    // Line
-                    const lineGrad = ctx.createLinearGradient(centerX - 150, 0, centerX + 150, 0);
-                    lineGrad.addColorStop(0, config.color + '00');
-                    lineGrad.addColorStop(0.3, config.color);
-                    lineGrad.addColorStop(0.7, config.color);
-                    lineGrad.addColorStop(1, config.color + '00');
-                    ctx.strokeStyle = lineGrad;
-                    ctx.lineWidth = 4;
-                    ctx.beginPath();
-                    ctx.moveTo(centerX - 150, centerY - 10);
-                    ctx.lineTo(centerX + 150, centerY - 10);
-                    ctx.stroke();
-
-                    // Flavor
-                    ctx.fillStyle = config.color;
-                    ctx.font = 'italic 100px Georgia, serif';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(config.flavor, centerX, centerY + 40);
-
-                    // Tagline
-                    ctx.fillStyle = 'rgba(45,24,16,0.35)';
-                    ctx.font = '300 26px Arial, sans-serif';
-                    ctx.fillText('LIQUID LIGHT', centerX, centerY + 90);
-
-                    // Badge (manual rounded rect instead of roundRect)
-                    const badgeW = 190, badgeH = 36, badgeR = 18;
-                    const badgeGrad = ctx.createLinearGradient(centerX - badgeW/2, 0, centerX + badgeW/2, 0);
-                    badgeGrad.addColorStop(0, config.color);
-                    badgeGrad.addColorStop(1, config.accent);
-                    ctx.fillStyle = badgeGrad;
-                    ctx.beginPath();
-                    ctx.moveTo(centerX - badgeW/2 + badgeR, centerY + 120);
-                    ctx.lineTo(centerX + badgeW/2 - badgeR, centerY + 120);
-                    ctx.arcTo(centerX + badgeW/2, centerY + 120, centerX + badgeW/2, centerY + 120 + badgeR, badgeR);
-                    ctx.lineTo(centerX + badgeW/2, centerY + 120 + badgeH - badgeR);
-                    ctx.arcTo(centerX + badgeW/2, centerY + 120 + badgeH, centerX + badgeW/2 - badgeR, centerY + 120 + badgeH, badgeR);
-                    ctx.lineTo(centerX - badgeW/2 + badgeR, centerY + 120 + badgeH);
-                    ctx.arcTo(centerX - badgeW/2, centerY + 120 + badgeH, centerX - badgeW/2, centerY + 120 + badgeH - badgeR, badgeR);
-                    ctx.lineTo(centerX - badgeW/2, centerY + 120 + badgeR);
-                    ctx.arcTo(centerX - badgeW/2, centerY + 120, centerX - badgeW/2 + badgeR, centerY + 120, badgeR);
-                    ctx.closePath();
-                    ctx.fill();
-
-                    ctx.fillStyle = '#ffffff';
-                    ctx.font = 'bold 18px Arial, sans-serif';
-                    ctx.fillText(config.badge, centerX, centerY + 145);
-
-                    // Dots
-                    ctx.fillStyle = config.color + '50';
-                    for (let i = 0; i < 9; i++) {
-                        ctx.beginPath();
-                        ctx.arc(centerX - 180 + i * 45, centerY + 190, 5, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-
-                    const tex = new THREE.CanvasTexture(canvas);
-                    tex.wrapS = THREE.RepeatWrapping;
-                    tex.wrapT = THREE.ClampToEdgeWrapping;
-                    tex.anisotropy = 16;
-                    return tex;
-                }
-
-                function createMetalnessMap(config) {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = 2048; canvas.height = 1024;
-                    const ctx = canvas.getContext('2d');
-                    ctx.fillStyle = '#ffffff';
-                    ctx.fillRect(0, 0, 2048, 1024);
-                    ctx.fillStyle = '#555555';
-                    ctx.fillRect(100, 75, 1848, 874);
-                    ctx.fillStyle = '#ffffff';
-                    ctx.fillRect(0, 0, 2048, 75);
-                    ctx.fillRect(0, 949, 2048, 75);
-                    const metalTex = new THREE.CanvasTexture(canvas);
-                    metalTex.wrapS = THREE.RepeatWrapping;
-                    metalTex.wrapT = THREE.ClampToEdgeWrapping;
-                    return metalTex;
-                }
-
-                canConfigs.forEach((config, idx) => {
-                    try {
-                        const group = new THREE.Group();
-                        const s = config.scale;
-
-                        // Body profile
-                        const points = [];
-                        for (let i = 0; i <= 15; i++) {
-                            const t = i / 15;
-                            const angle = t * Math.PI / 2;
-                            const x = 1.0 * s * (1 - Math.sin(angle) * 0.06);
-                            const y = -1.65 * s + t * 0.12 * s;
-                            points.push(new THREE.Vector2(x, y));
-                        }
-                        points.push(new THREE.Vector2(1.0 * s, -1.53 * s));
-                        points.push(new THREE.Vector2(1.0 * s, 1.53 * s));
-                        for (let i = 0; i <= 15; i++) {
-                            const t = i / 15;
-                            const angle = t * Math.PI / 2;
-                            const x = 1.0 * s * (1 - Math.sin(angle) * 0.06);
-                            const y = 1.53 * s + t * 0.12 * s;
-                            points.push(new THREE.Vector2(x, y));
-                        }
-
-                        const bodyGeo = new THREE.LatheGeometry(points, 64);
-                        const bodyMesh = new THREE.Mesh(bodyGeo, aluminumMat);
-                        bodyMesh.castShadow = true;
-                        bodyMesh.receiveShadow = true;
-                        group.add(bodyMesh);
-
-                        // Label
-                        const labelPoints = [new THREE.Vector2(1.005 * s, -1.42 * s), new THREE.Vector2(1.005 * s, 1.42 * s)];
-                        const labelGeo = new THREE.LatheGeometry(labelPoints, 64);
-                        const labelTex = createLabelTexture(config);
-                        const metalnessMap = createMetalnessMap(config);
-                        const labelMat = new THREE.MeshPhysicalMaterial({
-                            map: labelTex,
-                            metalnessMap: metalnessMap,
-                            metalness: 0.25,
-                            roughness: 0.55,
-                            clearcoat: 0.6,
-                            clearcoatRoughness: 0.15,
-                            envMapIntensity: 0.4,
-                            side: THREE.DoubleSide,
-                            transparent: true,
-                            opacity: 0.98
-                        });
-                        const labelMesh = new THREE.Mesh(labelGeo, labelMat);
-                        labelMesh.castShadow = true;
-                        group.add(labelMesh);
-
-                        // Top lid
-                        const lidPoints = [];
-                        for (let i = 0; i <= 25; i++) {
-                            const t = i / 25;
-                            const angle = t * Math.PI;
-                            const x = Math.sin(angle) * 0.04 * s + 0.96 * s;
-                            const y = Math.cos(angle) * 0.04 * s + 1.65 * s;
-                            lidPoints.push(new THREE.Vector2(x, y));
-                        }
-                        lidPoints.push(new THREE.Vector2(0, 1.65 * s));
-                        const lidGeo = new THREE.LatheGeometry(lidPoints, 32);
-                        const lidMesh = new THREE.Mesh(lidGeo, aluminumMat);
-                        lidMesh.castShadow = true;
-                        group.add(lidMesh);
-
-                        // Bottom lid
-                        const botLidPoints = [];
-                        for (let i = 0; i <= 25; i++) {
-                            const t = i / 25;
-                            const angle = t * Math.PI;
-                            const x = Math.sin(angle) * 0.04 * s + 0.96 * s;
-                            const y = -Math.cos(angle) * 0.04 * s - 1.65 * s;
-                            botLidPoints.push(new THREE.Vector2(x, y));
-                        }
-                        botLidPoints.push(new THREE.Vector2(0, -1.65 * s));
-                        const botLidGeo = new THREE.LatheGeometry(botLidPoints, 32);
-                        const botLidMesh = new THREE.Mesh(botLidGeo, aluminumMat);
-                        botLidMesh.castShadow = true;
-                        group.add(botLidMesh);
-
-                        // Pull tab
-                        const tabGroup = new THREE.Group();
-                        tabGroup.position.y = 1.68 * s;
-                        const tabBase = new THREE.Mesh(new THREE.CylinderGeometry(0.1 * s, 0.1 * s, 0.025 * s, 16), aluminumMat);
-                        const tabRing = new THREE.Mesh(new THREE.BoxGeometry(0.4 * s, 0.012 * s, 0.26 * s), aluminumMat);
-                        tabRing.position.z = 0.16 * s;
-                        tabRing.position.y = 0.008 * s;
-                        const tabRivet = new THREE.Mesh(new THREE.SphereGeometry(0.025 * s, 8, 8), aluminumMat);
-                        tabRivet.position.y = 0.02 * s;
-                        tabGroup.add(tabBase, tabRing, tabRivet);
-                        group.add(tabGroup);
-
-                        // Liquid
-                        const liquidGeo = new THREE.CylinderGeometry(0.92 * s, 0.92 * s, 2.9 * s, 32);
-                        const liquidMat = new THREE.MeshPhysicalMaterial({
-                            color: new THREE.Color(config.color),
-                            metalness: 0,
-                            roughness: 0.08,
-                            transmission: 0.65,
-                            thickness: 2.5,
-                            clearcoat: 1,
-                            clearcoatRoughness: 0.03,
-                            ior: 1.33,
-                            transparent: true,
-                            opacity: 0.82
-                        });
-                        const liquidMesh = new THREE.Mesh(liquidGeo, liquidMat);
-                        liquidMesh.scale.y = 0.82;
-                        group.add(liquidMesh);
-
-                        // Surface
-                        const surfaceGeo = new THREE.CircleGeometry(0.92 * s, 32);
-                        const surfaceMat = new THREE.MeshPhysicalMaterial({
-                            color: new THREE.Color(config.accent),
-                            metalness: 0,
-                            roughness: 0.02,
-                            transmission: 0.25,
-                            clearcoat: 1,
-                            opacity: 0.88,
-                            transparent: true
-                        });
-                        const surfaceMesh = new THREE.Mesh(surfaceGeo, surfaceMat);
-                        surfaceMesh.rotation.x = -Math.PI / 2;
-                        surfaceMesh.position.y = 1.19 * s;
-                        group.add(surfaceMesh);
-
-                        // Condensation drops
-                        const dropCount = 30;
-                        const dropGeo = new THREE.SphereGeometry(0.015 * s, 8, 8);
-                        const dropMat = new THREE.MeshPhysicalMaterial({
-                            color: 0xffffff,
-                            transparent: true,
-                            opacity: 0.7,
-                            roughness: 0,
-                            transmission: 0.95,
-                            clearcoat: 1,
-                            ior: 1.33
-                        });
-                        const drops = new THREE.InstancedMesh(dropGeo, dropMat, dropCount);
-                        const dropData = [];
-                        for (let i = 0; i < dropCount; i++) {
-                            const angle = Math.random() * Math.PI * 2;
-                            const h = (Math.random() - 0.5) * 2.9 * s;
-                            const r = 1.015 * s;
-                            dropData.push({
-                                x: Math.cos(angle) * r,
-                                y: h,
-                                z: Math.sin(angle) * r,
-                                baseY: h,
-                                speed: 0.03 + Math.random() * 0.12,
-                                phase: Math.random() * Math.PI * 2,
-                                scale: 0.4 + Math.random() * 0.8
-                            });
-                            dummy.position.set(Math.cos(angle) * r, h, Math.sin(angle) * r);
-                            dummy.scale.setScalar(dropData[i].scale);
-                            dummy.updateMatrix();
-                            drops.setMatrixAt(i, dummy.matrix);
-                        }
-                        drops.instanceMatrix.needsUpdate = true;
-                        group.add(drops);
-
-                        group.position.set(config.pos[0], config.pos[1], config.pos[2]);
-                        group.userData = {
-                            basePos: [...config.pos],
-                            rotSpeed: config.rotSpeed,
-                            idx: idx,
-                            liquidMesh: liquidMesh,
-                            surfaceMesh: surfaceMesh,
-                            drops: drops,
-                            dropData: dropData,
-                            tabGroup: tabGroup,
-                            s: s,
-                            config: config
-                        };
-                        canGroup.add(group);
-                        cans.push(group);
-                    } catch(canErr) {
-                        console.warn('Can creation failed for', config.name, canErr);
-                    }
-                });
-
-                if (cans.length === 0) {
-                    console.error('No cans created');
-                    return false;
-                }
-
-                // Dust particles
-                const dustCount = 80;
-                const dustGeo = new THREE.BufferGeometry();
-                const dustPos = new Float32Array(dustCount * 3);
-                for (let i = 0; i < dustCount; i++) {
-                    dustPos[i * 3] = (Math.random() - 0.5) * 30;
-                    dustPos[i * 3 + 1] = (Math.random() - 0.5) * 18;
-                    dustPos[i * 3 + 2] = (Math.random() - 0.5) * 18;
-                }
-                dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
-                const dustMat = new THREE.PointsMaterial({
-                    color: 0xffecd2,
-                    size: 0.08,
-                    transparent: true,
-                    opacity: 0.2,
-                    blending: THREE.AdditiveBlending,
-                    sizeAttenuation: true
-                });
-                const dustParticles = new THREE.Points(dustGeo, dustMat);
-                scene.add(dustParticles);
-
-                // Floating orbs
-                const orbCount = 6;
-                const orbs = [];
-                for (let i = 0; i < orbCount; i++) {
-                    const orbGeo = new THREE.SphereGeometry(0.06 + Math.random() * 0.1, 16, 16);
-                    const orbMat = new THREE.MeshBasicMaterial({
-                        color: new THREE.Color(canConfigs[i % 4].color),
-                        transparent: true,
-                        opacity: 0.1 + Math.random() * 0.08
-                    });
-                    const orb = new THREE.Mesh(orbGeo, orbMat);
-                    orb.position.set(2 + Math.random() * 7, (Math.random() - 0.5) * 5, (Math.random() - 0.5) * 5);
-                    orb.userData = {
-                        baseX: orb.position.x,
-                        baseY: orb.position.y,
-                        baseZ: orb.position.z,
-                        speed: 0.2 + Math.random() * 0.4,
-                        phase: Math.random() * Math.PI * 2
-                    };
-                    scene.add(orb);
-                    orbs.push(orb);
-                }
-
-                camera.position.set(-2, 1, 10);
-                camera.lookAt(4, 0, 0);
-
-                let mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
-                document.addEventListener('mousemove', (e) => {
-                    targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-                    targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-                });
-
-                // Burst particles
-                const burstCount = 80;
-                const burstGeo = new THREE.SphereGeometry(0.018, 6, 6);
-                const burstMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0 });
-                burstMesh = new THREE.InstancedMesh(burstGeo, burstMat, burstCount);
-                for (let i = 0; i < burstCount; i++) {
-                    burstData.push({ x: 0, y: 0, z: 0, vx: 0, vy: 0, vz: 0, life: 0, active: false, delay: 0, color: new THREE.Color() });
-                    dummy.position.set(0, -100, 0);
-                    dummy.updateMatrix();
-                    burstMesh.setMatrixAt(i, dummy.matrix);
-                }
-                scene.add(burstMesh);
-
-                // Trigger open
-                function triggerOpen() {
-                    if (opened) return;
-                    opened = true;
-                    const prompt = document.getElementById('hero-prompt');
-                    if(prompt) prompt.style.opacity = '0';
-
-                    cans.forEach((can, i) => {
-                        if (!can.userData.tabGroup) return;
-                        gsap.to(can.userData.tabGroup.rotation, { z: 0.6, duration: 0.5, delay: i * 0.12, ease: 'power2.out' });
-                        gsap.to(can.userData.tabGroup.position, { y: can.userData.s * 1.72, duration: 0.5, delay: i * 0.12, ease: 'power2.out' });
-                    });
-
-                    let burstIdx = 0;
-                    cans.forEach((can, i) => {
-                        const pos = can.position.clone();
-                        pos.y += 1.75 * can.userData.s;
-                        const config = can.userData.config;
-                        for (let j = 0; j < 20; j++) {
-                            if (burstIdx >= burstCount) break;
-                            const b = burstData[burstIdx++];
-                            b.active = true;
-                            b.life = 0;
-                            b.x = pos.x + (Math.random() - 0.5) * 0.35;
-                            b.y = pos.y;
-                            b.z = pos.z + (Math.random() - 0.5) * 0.35;
-                            b.vx = (Math.random() - 0.5) * 4.5;
-                            b.vy = Math.random() * 5.5 + 2.5;
-                            b.vz = (Math.random() - 0.5) * 4.5;
-                            b.delay = i * 0.12 + Math.random() * 0.25;
-                            b.color.set(new THREE.Color(config.color));
-                        }
-                    });
-                    burstTime = 0;
-                }
-
-                const heroPrompt = document.getElementById('hero-prompt');
-                if(heroPrompt) heroPrompt.addEventListener('click', triggerOpen);
-
-                ScrollTrigger.create({
-                    trigger: '#hero',
-                    start: 'top top',
-                    end: '+=150%',
-                    pin: true,
-                    scrub: 1,
-                    onUpdate: (self) => {
-                        if (!opened && self.progress > 0.1) triggerOpen();
-                        fillLevel = Math.min(1, Math.max(0, (self.progress - 0.1) / 0.9));
-                    }
-                });
-
-                // Flavor tag interaction
-                const flavorTags = document.querySelectorAll('.hero-flavor-tag');
-                flavorTags.forEach((tag, idx) => {
-                    tag.addEventListener('click', () => {
-                        flavorTags.forEach(t => t.classList.remove('active'));
-                        tag.classList.add('active');
-                        activeCanIdx = idx;
-                        cans.forEach((can, i) => {
-                            if (i === idx) {
-                                gsap.to(can.scale, { x: 1.12, y: 1.12, z: 1.12, duration: 0.6, ease: 'power2.out' });
-                                gsap.to(can.position, { z: 1.5, duration: 0.6, ease: 'power2.out' });
-                            } else {
-                                gsap.to(can.scale, { x: 1, y: 1, z: 1, duration: 0.6, ease: 'power2.out' });
-                                gsap.to(can.position, { z: can.userData.basePos[2], duration: 0.6, ease: 'power2.out' });
-                            }
-                        });
-                        if(rimLight) rimLight.color.set(new THREE.Color(canConfigs[idx].color));
-                    });
-                });
-
-                // Animation loop
-                const clock = new THREE.Clock();
-                function animate() {
-                    requestAnimationFrame(animate);
-                    const t = clock.getElapsedTime();
-
-                    mouseX += (targetMouseX - mouseX) * 0.03;
-                    mouseY += (targetMouseY - mouseY) * 0.03;
-                    camera.position.x = -2 + mouseX * 1.5;
-                    camera.position.y = 1 + mouseY * 0.8;
-                    camera.lookAt(4 + mouseX * 0.5, mouseY * 0.3, 0);
-
-                    cans.forEach((can, i) => {
-                        const ud = can.userData;
-                        if (!ud) return;
-                        can.position.y = ud.basePos[1] + Math.sin(t * 0.8 + i * 1.5) * 0.12;
-                        can.rotation.y = Math.sin(t * ud.rotSpeed * 0.5 + i) * 0.15 + t * ud.rotSpeed * 0.08;
-                        can.rotation.z = Math.sin(t * 0.3 + i * 2) * 0.02;
-
-                        if (ud.liquidMesh) {
-                            ud.liquidMesh.rotation.x = Math.sin(t * 2 + i) * 0.015;
-                            ud.liquidMesh.rotation.z = Math.cos(t * 1.5 + i) * 0.015;
-                        }
-                        if (ud.surfaceMesh) {
-                            ud.surfaceMesh.position.y = 1.19 * ud.s + Math.sin(t * 3 + i) * 0.015;
-                            ud.surfaceMesh.scale.setScalar(1 + Math.sin(t * 2 + i) * 0.008);
-                        }
-                        if (ud.drops && ud.dropData) {
-                            for (let j = 0; j < ud.dropData.length; j++) {
-                                const d = ud.dropData[j];
-                                d.y -= d.speed * 0.004;
-                                if (d.y < -1.45 * ud.s) d.y = d.baseY;
-                                dummy.position.set(d.x, d.y, d.z);
-                                dummy.scale.setScalar(d.scale * (0.8 + Math.sin(t * 3 + d.phase) * 0.2));
-                                dummy.updateMatrix();
-                                ud.drops.setMatrixAt(j, dummy.matrix);
-                            }
-                            ud.drops.instanceMatrix.needsUpdate = true;
-                        }
-                    });
-
-                    burstTime += 0.016;
-                    let hasActive = false;
-                    for (let i = 0; i < burstCount; i++) {
-                        const b = burstData[i];
-                        if (!b.active || burstTime < b.delay) continue;
-                        hasActive = true;
-                        b.life += 0.016;
-                        b.x += b.vx * 0.016;
-                        b.y += b.vy * 0.016;
-                        b.z += b.vz * 0.016;
-                        b.vy -= 3.0 * 0.016;
-                        const lifeRatio = Math.min(1, b.life / 1.8);
-                        dummy.position.set(b.x, b.y, b.z);
-                        dummy.scale.setScalar((1 - lifeRatio) * 1.5);
-                        dummy.updateMatrix();
-                        burstMesh.setMatrixAt(i, dummy.matrix);
-                    }
-                    if (hasActive) {
-                        burstMesh.instanceMatrix.needsUpdate = true;
-                        burstMat.opacity = 0.9;
+        // Flavor tag interaction
+        const flavorTags = document.querySelectorAll('.hero-flavor-tag');
+        flavorTags.forEach((tag, idx) => {
+            tag.addEventListener('click', () => {
+                flavorTags.forEach(t => t.classList.remove('active'));
+                tag.classList.add('active');
+                activeCanIdx = idx;
+                heroCans.forEach((can, i) => {
+                    if (i === idx) {
+                        can.classList.add('active');
                     } else {
-                        burstMat.opacity = 0;
+                        can.classList.remove('active');
                     }
-
-                    orbs.forEach(orb => {
-                        const u = orb.userData;
-                        orb.position.x = u.baseX + Math.sin(t * u.speed + u.phase) * 0.5;
-                        orb.position.y = u.baseY + Math.cos(t * u.speed * 0.7 + u.phase) * 0.3;
-                        orb.position.z = u.baseZ + Math.sin(t * u.speed * 0.5 + u.phase) * 0.4;
-                        orb.scale.setScalar(1 + Math.sin(t * 2 + u.phase) * 0.2);
-                    });
-
-                    const positions = dustParticles.geometry.attributes.position.array;
-                    for (let i = 0; i < dustCount; i++) {
-                        positions[i * 3 + 1] += Math.sin(t * 0.3 + i) * 0.002;
-                        positions[i * 3] += Math.cos(t * 0.2 + i) * 0.001;
-                    }
-                    dustParticles.geometry.attributes.position.needsUpdate = true;
-                    dustParticles.rotation.y = t * 0.02;
-
-                    const bgLerp = fillLevel;
-                    renderer.setClearColor(new THREE.Color(
-                        (15 + (250 - 15) * bgLerp) / 255,
-                        (14 + (248 - 14) * bgLerp) / 255,
-                        (13 + (245 - 13) * bgLerp) / 255
-                    ), 1);
-
-                    if(rimLight) rimLight.intensity = 5 + Math.sin(t * 0.5) * 1;
-                    if(keyLight) keyLight.intensity = 10 + Math.sin(t * 0.3) * 1.5;
-
-                    renderer.render(scene, camera);
-                }
-                animate();
-
-                window.addEventListener('resize', () => {
-                    if(!camera || !renderer) return;
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
                 });
+            });
+        });
 
-                return true;
-            } catch(e) {
-                console.error('Three.js init error:', e);
-                return false;
+        // Click to open (pop tab)
+        function triggerOpen() {
+            if (opened) return;
+            opened = true;
+            if(heroPrompt) heroPrompt.style.opacity = '0';
+            heroCans.forEach((can, i) => {
+                can.classList.add('opened');
+                gsap.to(can, { y: -20, duration: 0.3, delay: i * 0.1, ease: 'power2.out', yoyo: true, repeat: 1 });
+            });
+        }
+        if(heroPrompt) heroPrompt.addEventListener('click', triggerOpen);
+
+        ScrollTrigger.create({
+            trigger: '#hero',
+            start: 'top top',
+            end: '+=150%',
+            pin: true,
+            scrub: 1,
+            onUpdate: (self) => {
+                if (!opened && self.progress > 0.1) triggerOpen();
             }
-        }
-
-        const threeSuccess = initThreeJS();
-        if (!threeSuccess && fallbackCans) {
-            fallbackCans.classList.add('visible');
-            if(heroCanvas) heroCanvas.style.display = 'none';
-        }
+        });
 
         // ===== HERO TEXT ANIMATIONS =====
         (function() {
@@ -2437,6 +1821,7 @@
         // ===== MOBILE MENU =====
         const mobileToggle = document.getElementById('mobile-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
         let menuOpen = false;
         if(mobileToggle && mobileMenu) {
             mobileToggle.addEventListener('click', () => {
@@ -2453,6 +1838,14 @@
                     if(lenis) lenis.start();
                 });
             });
+            if(mobileMenuClose) {
+                mobileMenuClose.addEventListener('click', () => {
+                    menuOpen = false;
+                    mobileMenu.style.opacity = '0';
+                    mobileMenu.style.pointerEvents = 'none';
+                    if(lenis) lenis.start();
+                });
+            }
         }
 
         // ===== ANCHORS =====
